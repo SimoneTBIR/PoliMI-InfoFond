@@ -85,28 +85,25 @@
 #define POS 1
 #define NEG 0
 
-typedef struct gainEtIndexes_s
-{
-	int gain, index_min, index_max;
-}
-gainEtIndexes_t;
+typedef 
+	struct {int gain, index_min, index_max;}
+	gainEtIndexes_t;
 
 int
 main(int argc, char *argv[])
 {
 	/* dichiarazione di variabili */
-	int var[VARIATIONS], 					/* input variations */
-		tot[VARIATIONS], 					/* compressed partial sums of var */
-		significant_index[VARIATIONS],		/* indexes saved during compression */
-		i, j, k,							/* indexes */
-		imax, imin, ibest, 					/* remarkable indexes */
-		tmp, tmpmax, tmpmin, sign;			/* temporal variable */
+	int var[VARIATIONS],
+		tot[VARIATIONS],
+		sign_index[VARIATIONS],
+		i, j, k,
+		imax, imin, ibest,
+		tmp, tmpmax, tmpmin, sign;
 	gainEtIndexes_t saved[VARIATIONS/2+1]; 
-		/* there is at most one for each couple of inputs*/
 
 	/* data acquisition, compression and basic elaboration*/
 	scanf("%d",&var[0]);
-	significant_index[0]=0;
+	sign_index[0]=0;
 	sign=POS;
 	j=0;
 	tmp=0;
@@ -116,26 +113,26 @@ main(int argc, char *argv[])
 		if(var[i]>=0 && sign)
 		{
 			tmp+=var[i];
-			significant_index[j]=i;
+			sign_index[j]=i;
 		}
 		else if(var[i]<=0 && !sign)
 		{
 			tmp+=var[i];
-			significant_index[j]=i;
+			sign_index[j]=i;
 		}
 		else if(var[i]>=0 && !sign)
 		{
 			j++;
 			sign=POS;
 			tmp=var[i];
-			significant_index[j]=i;
+			sign_index[j]=i;
 		}
 		else /* if var[i]<=0 && sign */
 		{
 			j++;
 			sign=NEG;
 			tmp=var[i];
-			significant_index[j]=i;
+			sign_index[j]=i;
 		}
 		if (j==0) tot[0]=tmp;
 		else tot[j]=tot[j-1]+tmp;
@@ -210,10 +207,10 @@ main(int argc, char *argv[])
 	/* output */
 	if(saved[ibest].index_min==0 && 
 	   saved[ibest].index_max==0)
-		printf("\nERR: do not buy.");
+		printf("\nERR: do not buy. you will lose money anyway.");
 	else
-		printf("\nbuy: %d\nsell: %d\ngain: %d", significant_index[saved[ibest].index_min]+2,
-												significant_index[saved[ibest].index_max]+1,
-												saved[ibest].gain);
+		printf("\nbuy: %7d", sign_index[saved[ibest].index_min]+2);
+		printf("\nsell: %7d", sign_index[saved[ibest].index_max]+1);
+		printf("\nprofit: %7d",saved[ibest].gain);
 	return 0;
 }
