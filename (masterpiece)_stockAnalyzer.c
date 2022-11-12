@@ -47,7 +47,6 @@
  */
 
 #include <stdio.h>
-#include <time.h>
 
 #define VARIATIONS 100000
 
@@ -60,20 +59,18 @@ gainEtIndexes_t;
 int
 main(int argc, char *argv[])
 {
-	clock_t start_time = clock();
-
-	/* dichiarazione di variabili */
+	/* variable declaration */
 	int var[VARIATIONS], tot[VARIATIONS],
-			  i, j, 							/* indexes */
-			  imax, imin, ibest, 				/* remarkable indexes */
-			  tmp, tmpmax, tmpmin;				/* temporal variable */
+			  i, j, 												/* indexes */
+			  imax, imin, ibest, 						/* remarkable indexes */
+			  tmp, tmpmax, tmpmin;					/* temporal variable */
 	gainEtIndexes_t saved[VARIATIONS/2+1]; 
-		/* there is at most */
+			/* there is at most one for each data couple*/
 
 	/* data acquisition and basic elaboration into tot */
 	scanf("%d",&var[0]);
 	tot[0]=var[0]; 	
-	for(i=1;i<VARIATIONS;i++) 	/* tot is the partial sums sequence*/
+	for(i=1;i<VARIATIONS;i++) 					/* tot is the partial sums sequence*/
 	{
 		scanf("%d",&var[i]);
 		tot[i]=tot[i-1]+var[i];
@@ -152,8 +149,5 @@ main(int argc, char *argv[])
 		printf("\nbuy: %d\nsell: %d\ngain: %d", saved[ibest].index_min+2,
 												saved[ibest].index_max+1,
 												saved[ibest].gain);
-
- 	printf("\n\n\n %f seconds", (double)(clock() - start_time));
-
 	return 0;
 }
