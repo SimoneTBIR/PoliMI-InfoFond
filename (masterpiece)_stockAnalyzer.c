@@ -61,16 +61,16 @@ main(int argc, char *argv[])
 {
 	/* variable declaration */
 	int var[VARIATIONS], tot[VARIATIONS],
-			  i, j, 												/* indexes */
-			  imax, imin, ibest, 						/* remarkable indexes */
-			  tmp, tmpmax, tmpmin;					/* temporal variable */
+			  i, j, 			/* indexes */
+			  imax, imin, ibest, 		/* remarkable indexes */
+			  tmp, tmpmax, tmpmin;		/* temporal variable */
 	gainEtIndexes_t saved[VARIATIONS/2+1]; 
 			/* there is at most one for each data couple*/
 
 	/* data acquisition and basic elaboration into tot */
 	scanf("%d",&var[0]);
 	tot[0]=var[0]; 	
-	for(i=1;i<VARIATIONS;i++) 					/* tot is the partial sums sequence*/
+	for(i=1;i<VARIATIONS;i++) 	/* tot is the partial sums sequence*/
 	{
 		scanf("%d",&var[i]);
 		tot[i]=tot[i-1]+var[i];
@@ -147,7 +147,7 @@ main(int argc, char *argv[])
 		printf("\nERR: do not buy.");
 	else
 		printf("\nbuy: %d\nsell: %d\ngain: %d", saved[ibest].index_min+2,
-												saved[ibest].index_max+1,
-												saved[ibest].gain);
+							saved[ibest].index_max+1,
+							saved[ibest].gain);
 	return 0;
 }
